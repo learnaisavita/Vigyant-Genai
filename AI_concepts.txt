@@ -1,0 +1,401 @@
+What is AI ?
+
+
+AI Gone through 3 ERA
+Era-1 >> Rule-Based AI (1950-1980)
+                Handwritten Rules; Outside of rules cant work
+Era-2 >> ML(1990-2000)
+              System learn through Data using Decsion tree, Support vector Machines and Early NN
+             Better comparatively earlier 
+              One model can perform only one task
+
+1. AI 
+Era-3 >> 2017(Google paper Attention is all you need)
+               Introduced Transformer Architecture
+     Transformer Archietecture that powers every AI system(GPT, Claude, Gemini etc)
+              - Transformer look at whole sentence at once and calculates how every wprd is related to other words
+    e.g. Bank by the river has steep walls 
+          Using word bank it understand its bank of river and not financial bank
+         This is what attention mechanism
+More Data + More computing Power= Smarter Model i.e Transformer scalability
+
+That’s Our LLM
+
+
+2. How LLMs work ?
+- Brains of every AI Product
+- Technically Next Token Predictors
+>> When we give one word it try to pick next word more precisely from existing set of word by calculating probabilities of next word
+e.g. Computer is on {Table 56%, Floor 13%, Chair 5%) like autocomplete but using whole inet data
+
+Gemini , GPT, Claude etc.
+
+
+This prediction can be controlled using temperature(more value is more creative)
+A.	Temperature
+-	If temp = o >> hihest probability word is selected >> for fact based task
+-	                E.g. writing an email
+-	Temp=high >> More creative used for Brainstorming
+-	               E.g. writing a story
+
+
+B.Context Window >> How much info model can see at once
+                                - Models working Memory(RAM)
+                                - Diff models has diff CW e.g. claude ops 200000 tokens
+                                     Gemini 2.5 pro >> 1 milion tokens = entire library
+              **More tokens= more cost and slower response may be model loses focus on earlier conversation
+             Needs Engg. Consideration of LLM’s
+
+
+3. Chatbots
+          - Responsive(Reactive) Model, answers our question
+  User (What is capital of France ?) 
+ChatGPT(Understands question and Generate response) 
+ Sends Output(Response to user)
+
+
+What if we gave it Goal instead of Question ??
+e.g. Research top 3 Competitors of my company  and write detailed report comparing there features, process and market positions. Then email it to me
+1.Research 2. Analyze and Compare 3. Detailed report 4. Email result
+
+4.Here AI AGENt comes in picture
+Agent >> Proactive. Takes actiob and get things done
+ Assign goal > Agent will
+1.	Think
+2.	Set steps and take actions step by step
+3.	Delivers result
+
+AI Agent is Autonomous system that can Observe Learn->Adapt->Improve based on what it learns along the way
+-	With min human interference
+Have these 5 things to make it autonomy
+-	1.Perceive its Enviornment (perception):- Your INPUT >> Can read files. Browse websites, Get API responses, Look at images
+-	2.Reasoning –(About goals):- It can Think through the problem/Goal
+-	                                             Think, Break problem into pieces
+-	                                              Figure out best approach
+-	3.Planning:- Creates multistep plan
+-	                    Make Decisions
+-	                    Adjust as things change and then react(output gen)
+-	4.Action:- Take sequence of actions(Using tools)
+Like Call api, Run Code, Send Email, Search on web
+5.Adaptation:- It Learns from feedback, Its own Mistakes
+
+**ChatBots has only 1 nd 2nd step while Agents has all 5 of them
+
+EVERY  AI AGENt HAS A LOOP 
+1.	Percieve 2, Think. 3. Act. 4. Observe  and again perceive 
+
+IT LOOPS UNTILL IT ACHIEVE GOAL OR ERROR
+
+This lOop also called as perceive-reason-Act loop or
+                                          Think-Act-Observe Loop
+
+** Reasoning+Act = ReAct
+                        FOrceing agent to reasoning before any activity to prevent agent from random/impulsive tool calls
+                      Have clear reasing trail to figure out what went wrong if something doesn’t work
+
+5. Tools(Superpower of LLMs);- Claude and GPT4  trained for tool/function calling  
+  Information tools= websearch, news, weather API
+  Computation tools=calculators, SQL Query runners, Python code execution
+  File tools= Read pdfs, docs and write into file
+  Communication Tools= Send emails, create calendar events
+  Meta Tools= Let agebt call oher ai systems may be to generate images, translate                       languages even convert text to speech etc.
+
+Modern Agent can call tools simultaneously
+E,g what is weather in London and Delhi
+It may fire up 2 agents to get weather details from respective city and gives result to main agent; This agent Syntesize response and present it to user
+
+
+** Tools must have proper description as agent(llms) decide tools with the help of tool description
+Wrong description lead to wrong tool selection
+
+6.Memory:- How agent remember ?
+-	LLMs’ don’t have built in persistent memory
+-	For chatbots its okay but for agents it may lead to mistakes and error this is real problem
+So we must provide external Memory solution
+-	Agents need memory to Learn, Adapt and recall
+SHORT TERM Memory
+-	  A. Sensory Memory= Captures info from environment
+-	  B. Episodic Memory= Remebers events and experiences
+LONG TERM MEMORY(external DB required i.e. Vector DB)
+-	  C. Working Memory= Holds and process current info
+-	  D. Semantic Memory= Stores Knowledge, Facts and concepts
+
+
+GIVING ACCESS TO DATA ON WHICH MODELS WERE NOT TRAINED ON
+7.RAG(Retrieval Augmented Generation):- Providing external Knowledge and real-time information to get more accurate result and reduce hallucinations
+MODELS are trained on data which has cut-off dates i.e. models do not have any information about your company’s docs or may be what happen last week
+You want model to work with company files. Research paper, experiments, Confidential files etc. You can dump all your data as models have context window
+
+
+So we want model to retrieve data as and when its required.
+
+HOW RAG works
+Step1- Indexing
+Bring all your files(PDfs, Documents, DB)
+ Split them into smaller chunks
+ Each chunk is converted into Numerical Vector (index) using defined Embedding Model
+            Vector is like mathematical fingerprint of the chunk(piece of text)
+            Vector DB is Organized, searchable and ready to retrieval 
+
+Step-2 Retrieval:-
+      User ask question
+     Question converted into vector using same embedding technique
+    Now using question vector; searches into vector Db to search for similar/matching chunks(using probability of matching) 
+Pull most relevant(matching) chunks
+
+Step-3 enumeration:-
+Using Relevant chunks ; inject them into LLM prompt alongside user question
+Instruct to LLM like “Answer this question based on this context”
+LLM has all information needed in its context itself so 
+Genrates accurate, Grounded  and reliable answer
+
+RAG- Combines Information retrieval with LL generation so model can answer based on your specific data
+
+NO Hallucination about things he doesn’t know
+NO Outdated answer
+NO I don’t have access to that info/data
+JUST ACCURATE ANSWER BASED ON YOUR ACTUAL DATA.
+
+CHUNking is most imp thing in RAG system
+If chunk is too small- loss of context
+                       Large – imprecise retrieval
+
+Technique as HIerarciecal Chunking
+Small chunks for precision as child
+Large chunk for more information(accuracy) as parent chunks
+Precision(child)+Context(Parent=Better Retrieval
+
+User Query  Retriev ContextLLM Answer
+
+**Agentic RAG= Instead of fixed pipeline agent decides when and what to retrieve dynamically; executes its multiple rounds till get required info
+MOST POWERFUL PATTERN FOR COMPLEX MULTISTEP RESEARCH TASKs.
+
+8.	Vector DB
+-	Specialize DB built to 
+STORE- vectors representing data in high dimensional space
+INDEX- Vectors for fast and efficient retrieval
+SEARCH- for ost similar vectors based on meaning
+
+Vector DB available
+1.	Pinecone- Cloud Native, Fully managed(Best for Production)
+2.	Waeviate- Vector search+Keyword search in one system
+3.	Quadrant- Built in Rust; Extremly fast and has great filetring capacity
+4.	Chroma- Easy to get started, easy setup, simple and developer friendly great for local developer and prototyping(Best to start with and prototyping
+5.	Milvus- Handles billions of vectors at massive enterprise scale i.e. reliable, scalable, high permormance and global distribution
+6.	pgVector(for postgresql)- Built into Postgresql, fast and efficient, simpe to use
+
+
+9. Embeddings:-
+Vectors in High-dimensional space
+Meaning as direction
+Numbers that capture semantics
+Similarity through Distance(Cosine cone)
+Fondation for search and retrieval
+To power AI application
+
+Vectors and embeddings
+Embedding is way to represent meaning as number
+Long List [0.21, -0.44, 0.13, 0.87, 0.01, …] is called as Vector
+Similar Meanings Get Similar Numbers
+Happy joyful [0.21, -0.44, 0.13, ..]
+Sad Unhappy [-0.22, 0.45, -0.12..]
+Close numbers are -0.44 and 0.45
+
+e.g. puppy and dog and up as vectors that are very close to each other in mathematical space
+
+Cat is bit far but in neigrhood while bus is in diff direction from it
+MODEL LEARNS to Organize its CONTEXT into its meaning iin giant Numerical space
+
+Because of this now we can
+Find Documents that are conceptually related to a question even if they use completely diff word.
+
+Like Benefits of dogs for kids ?
+Emotional impact of animal companionship  or
+Why children bond with pets
+
+>> This is SEMANTIC Search
+Semantic search is more powerfull than keyword search
+
+Diff embeddings model have diff dimensions
+e.g. OPenAI’s text-embedding-3-large uses 3072 dimensions
+        Cohere – embedding model uses 1024 dimensions
+   Open source model (all MiniLM) uses 384 dimension>> Runs locally on  laptop for free
+
+**ALWAYS USE THE SAME EMBEDDING MODEL FOR INDEXING AND QUERYING
+
+Lets say you indexed using OPENAi embeddings and Query using Cohere then result will be Completely incompatible
+Its like we are referring to chinese dictionary to get meaning of some Japanese word
+
+
+10.MCP(USB port for AI):- MODEL CONTEXT PROTOCOL
+-	Connects AI to Tools and DATA
+-	Standardized integration
+-	One protocol for endless possibilities
+-	Acts like universal interface
+
+
+B4 MCP if we want to connect Ai agent/LLM to Application like whtsapp(Notion) then we had to write code to custom Notion Integration 
+Ai agent Cstom Notion Integration  Notion
+Same way for GitHub Integratio and any other application
+Each code is different and weach one of them requiring its own maintenance
+
+MOSt IMP none of them work acrorss diff ai model
+i.e. custome integration code for github would be separate for GPT, separate for Claude, Separate for Gemini 
+Langchain code for GPT would not work for claude
+Langchain code for claude would not work for GPT and vice Versa
+
+
+MCP Solves this problem for all
+-	Open standard 
+-	Created by Anthropic
+-	To define universal way to connect AI models with external tools , Data sources and even services
+
+Its like USB port
+B4 USb every device like camera, Printer, KB, Mouse had its own interface to connect and communicate
+
+Usin USB everyone can connect to computer using same interface same way.
+
+Terms used in MCP
+MCP Hosts(Application that uses AI) >> Claue desktop, Custom app etc..
+MCP Clients(AI model itself) >> 
+MCP Servers(Programs that exposes capabilities to the AI) >> Web search, DB, Email, Calendar , Google drive etc..
+
+
+MCP Servers(applications) can expose 3 types of things
+A.	Tools >> Functions AI can call for searching DB or creating a file
+B.	Resources >> Data AI can read like file contents or API responses
+C.	Prompts >> Prebuilt templates for common tasks
+There are MCP servers for Github, Google drive,Notion, Slack, Postgresql databases, Brain search, Aws, Sentry error trcking and many more
+
+Build one MCP integration once and it works with any MCP compatible AI Model
+
+11.Agentic Architecture:- How we structure agent’s thinking as diff. problems needs diff approaches and solution
+
+These patterns are nothing but agentic architecture
+A.	ReAct= Reason->ACT-> Observe
+ Works for most General tasks
+
+B.	Chain-of-Thought = Question-step1-ste2-step3-Answer
+-	Forces model to give entire reasoning process b4 giving an answer
+-	E.g in prompt we are saying lets think step by step
+-	Improves Accuracy in Maths problem, logic puzzles and multi-step reasoning
+
+C.	Plan and execute;-
+-	Creates a complete plan upfront then it execute each step one by one
+-	Good for predictable workflows, we know what happens in next phase or execution
+ Something happens mid execution upfront plan might be outdated
+
+D. Tree of thoughts:-
+      Instead of one line of reasoning Agent explores many paths in parallel(multiple branches simultaneously ) to get solution 
+Like chess player- considerin several moves at once then evaluating which branch looks most promising ; execute that only
+
+This architecture great for Creative and strategic decisions
+Highly expensive(in terms of compute) but better solution for complex problem
+
+E. Reflexion:- SELF IMPROVEMENT THROUGH FAILURE
+Agent tries task if its failed/ imperfect result then explicitely reflect on what and why  went wrong and tries again by keeping that reflection in mind.
+Great for coding tasks, Maths or anything verifyable
+
+F.LATS(Language Agent Tree Search)= combination of Tree search+ React+Reflexion
+Explores tree for possible actions
+Evaluate each branch
+Learn from failure
+
+Its very expensive, complex but highly powerful(high stakes optimization problems)
+
+** Production systems uses ReACT+ Relxion
+Simple, reliable and powerfull
+
+12.Multi Agent Systems:- 
+-	Complex problem, sequential execution of task makes it slow, Context window filled up quickly for ig data to solve problems multiple agents can work simultaneously, parralealy can check each others works
+Topologies:-
+A.	Sequential Pipeline>> one after another>> researcher>writer>publisher
+B.	Parallel Arrangement >> Multiple agents working on diff sub-task simultaneously, aggregator(manager) combinesr result
+C.	Hierarchiecal Manager-worker patern:-
+   (Orchestrator)Manager= Plans, delegates, monitors and synthesizes
+  Workers= Specialized in sp. Task
+e.g. software development team
+
+
+13.Frameworks and advanced patterns:- (Clarity, Structure, Guidance, Consistency
+-  Building everything from scratch everytime would be insane that’s why Frameworks exist
+A- Langchain is most popular framework because of its massive Ecosystem, more than hundred integrations possible
+B- LangGraph is useful in building complex Stateful multiAgent Workflow with loops and conditional branching
+For complex production pipeline Langchain is startpoint
+
+C.LLamaIndex:- Is the Go –To for Anythoing Heavily RAG-based 
+                   Has Best in class Document processing
+                  50+ data connectore
+                 Excellent for Building Intelligent Knowledge-Base Systems
+
+D.AutoGen:- from Microsoft
+-	Multi-agent conversation pattern; agents converse with each other to solve problem
+Built in code execution- Great for autonomous coding and research tasks
+E.CrewAi:- Beginner friendly multi-agent framework
+ 
+
+Self modifying Agents:- Provide agent file which has instruction/ rules like memory file
+                                       Agent loads/reads it at every new session  and then works with context
+iF it makes mistake you correct it and agent aupdate rule and doesn’t mae same mistake again
+-	Agent works, learns and improve over time 
+
+
+Select models by applying 60+30+10 rules
+
+14.Safety/Guardrail:-
+
+
+15. Tokens:- 
+	
+
+===============================================================================================
+
+API >> Application Program Interface
+       RPC>> talk with application API
+
+
+
+
+ML/DL >>
+ Mathematics referces
+
+
+
+
+
+
+
+ 
+
+
+
+ 
+
+
+
+
+                                
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           
+          
