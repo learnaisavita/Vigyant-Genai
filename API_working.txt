@@ -1,0 +1,71 @@
+API keys try with Groq
+
+Sign up for Google colab and open new file
+
+Open Cell in Google colab
+Step-1. pip install -U openai
+
+>> Create API key in Google ai studio 
+>> Import key in Google Colab as gemini-api-key
+
+** For openAi reference
+https://developers.openai.com/api/docs/guides/conversation-state
+
+Step-2.Add new Cell and add this code
+import openai
+from google.colab import userdata
+
+# Retrieve Gemini API key from Colab secrets
+GEMINI_API_KEY = userdata.get('gemini-api-key')
+
+# Initialize the OpenAI client pointing to the Google Gemini API endpoint
+client = openai.OpenAI(
+    api_key=GEMINI_API_KEY,
+    base_url="https://generativelanguage.googleapis.com/v1beta/"
+)
+**RUN CELL if no errors
+
+Step-3. Add new cell 
+#Text-generation model
+import openai
+from google.colab import userdata
+
+# Retrieve Gemini API key from Colab secrets
+GEMINI_API_KEY = userdata.get('gemni-api-key')
+
+# Initialize the OpenAI client pointing to the Google Gemini API endpoint
+client = openai.OpenAI(
+    api_key=GEMINI_API_KEY,
+    base_url="https://generativelanguage.googleapis.com/v1beta/"
+)
+
+# Use the chat completion API with the Gemini 3 Flash Preview model
+response = client.chat.completions.create(
+    model="gemini-3-flash-preview",
+    messages=[
+        {"role": "user", "content": "What is the capital of France?"},
+        {"role": "assistant", "content": "The capital of France is Paris."},
+        
+
+    ],
+    temperature=0.7,
+)
+
+# Print the result
+print(response.choices[0].message.content)
+
+**RUN CELL
+
+** You can continue chat by adding {"role": "user", "content": "Input question"},
+========================================================================================
+If you want to work with another model
+
+Step-4 Add new CEll
+#Using Vision Model
+from transformers import pipeline
+
+classifier = pipeline(model="google/vit-base-patch16-224")
+result = classifier("https://pnggallery.com/wp-content/uploads/cat-02.png")
+print (result)
+
+#you can add any png picture link s
