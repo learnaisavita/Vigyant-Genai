@@ -1,0 +1,308 @@
+{
+  "name": "n8n-pizza",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "n8n-pizza-shop",
+        "formDescription": "Feedback form for n8n pizza",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Contact",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "EmailID",
+              "fieldType": "email"
+            },
+            {
+              "fieldLabel": "Feedback",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Positive"
+                  },
+                  {
+                    "option": "Negative"
+                  },
+                  {
+                    "option": "Neutral"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -384,
+        -112
+      ],
+      "id": "bf0b65ce-f023-4fb9-bacf-93bbd3f130e4",
+      "name": "On form submission",
+      "webhookId": "728e6019-39bb-4f83-a791-0bcaca716900"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3e6c6aed-c54d-44ef-b27d-b054e2c2a29a",
+              "leftValue": "={{ $json.Feedback }}",
+              "rightValue": "Positive",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -96,
+        -64
+      ],
+      "id": "7677e474-4256-4c97-a4f1-d4bb33ddc44c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "18XqGGJPW1m4MUnUPpqhKlAaPNxmSv5CUn5BOmUhLM3Q",
+          "mode": "list",
+          "cachedResultName": "n8n-pizza",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18XqGGJPW1m4MUnUPpqhKlAaPNxmSv5CUn5BOmUhLM3Q/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18XqGGJPW1m4MUnUPpqhKlAaPNxmSv5CUn5BOmUhLM3Q/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('On form submission').item.json.Name }}",
+            "ContactNo": "={{ $('On form submission').item.json.Contact }}",
+            "EmailID": "={{ $('On form submission').item.json.EmailID }}",
+            "Discount": "={{ $json.Discount }}",
+            "Feedback": "={{ $json.Feedback }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ContactNo",
+              "displayName": "ContactNo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EmailID",
+              "displayName": "EmailID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Feedback",
+              "displayName": "Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Discount",
+              "displayName": "Discount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        -96
+      ],
+      "id": "11fa5cf3-1fb5-493b-a5c3-4748d8ed56fe",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "9nAPql9G6OOJxH7g",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f9cbce0e-e5d5-40ea-b565-ca4a203620a4",
+              "name": "Feedback",
+              "value": "={{ $json.Feedback }}",
+              "type": "string"
+            },
+            {
+              "id": "b8b8ce51-4b12-4ce5-b75c-e3113a2e15e0",
+              "name": "Discount",
+              "value": "Yes",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        128,
+        -160
+      ],
+      "id": "d1315561-550c-478e-b005-649d3e573dbb",
+      "name": "Discount-yes"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f9cbce0e-e5d5-40ea-b565-ca4a203620a4",
+              "name": "Feedback",
+              "value": "={{ $json.Feedback }}",
+              "type": "string"
+            },
+            {
+              "id": "b8b8ce51-4b12-4ce5-b75c-e3113a2e15e0",
+              "name": "Discount",
+              "value": "No",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        112,
+        0
+      ],
+      "id": "7bbd9d44-8860-4633-8737-83164ab4a31f",
+      "name": "Discount-No"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Discount-yes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Discount-No",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discount-yes": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discount-No": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "8d54a295-50e6-4254-8db9-7b5a55460b53",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2d340ade61a69f7568b714d89de8fbd2f3d2b92e05d91610e66ff047bc57685f"
+  },
+  "nodeGroups": [],
+  "id": "GqvdiDpaoqv3Pmsq",
+  "tags": []
+}

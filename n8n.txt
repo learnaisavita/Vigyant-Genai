@@ -1,0 +1,140 @@
+A. Install Vscode
+B. Python 3.12
+ubuntu@ubuntu-virtual-machine:~/Documents$ cd AI_projecct/
+ubuntu@ubuntu-virtual-machine:~/Documents/AI_projecct$ python3 -m venv .venv
+ubuntu@ubuntu-virtual-machine:~/Documents/AI_projecct$ source .venv/bin/activate
+(.venv) ubuntu@ubuntu-virtual-machine:~/Documents/AI_projecct$ 
+
+
+To setup n8n using Docker 
+
+
+C. Install Docker
+sudo apt update
+    2  sudo apt install curl
+    3  curl -fsSL https://get.docker.com -o get-docker.sh
+    4  sudo sh ./get-docker.sh 
+
+Install Docker Desktop
+
+TO Download 
+https://docs.docker.com/desktop/setup/install/linux/ubuntu/
+
+
+sudo apt install ./docker-desktop-amd64.deb
+
+systemctl --user start docker-desktop
+
+systemctl --user enable docker-desktop
+
+D. Install n8n
+https://docs.n8n.io/deploy/host-n8n/install-options/install-with-docker
+
+
+
+docker pull docker.n8n.io/n8nio/n8n
+
+docker volume create n8n_data
+docker run -it --rm \
+ --name n8n \
+ -p 5678:5678 \
+ -e GENERIC_TIMEZONE="Asia/Kolkata" \
+ -e TZ="Asia/Kolkata" \
+ -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
+ -e N8N_RUNNERS_ENABLED=true \
+ -v n8n_data:/home/ubuntu/Desktop/n8n \
+ docker.n8n.io/n8nio/n8n
+
+
+
+0 to open in browser
+
+E. Open n8n in Browser using url http://localhost:5678
+
+What is n8n ?
+Workflow automation tool
+-All workflows are json Based
+-Uses nodes and connections
+-Easy to Understand and Debug
+
+Components of N8N 
+Nodes:- Building blocks (e.g., Gmail, HTTP Request, AI Agent).
+Workflows:- Collection of nodes connected together.
+Credentials:- Securely store API keys and logins.
+
+
+Nodes Categories:-
+1. Trigger nodes:- How workflow starts
+2. Action nodes:- Perform tasks
+3. Logic Nodes:- Add conditions, branch or loop
+4. Data Nodes:- Transform, Merge, Split, map data
+5. Connections:- Define data flow between nodes
+6. Execution Log:- Tracks workflow executions success/failure
+
+Workflow Components
+1. Triggers:- Star the workflow e.g. new email, On schedule, Manual etc)
+2. Actions:- Steps to execute(E.g. reply to email)
+3. Data Flow:- How data moves/pass from one step to another
+
+
+
+Workflow is sequence of actions
+workflow types-
+A. Linear workflow:- Sequential execution of nodes
+B. Non-linear:- Ai in loop for decision making
+
+E.g. of Linear Workflow
+
+1. Getting customer feedback(Positive, Negative,Neutral) alongwith more details
+ like name, EmailID, contact_no 
+2. If Feedback is positive then Say Yes for Discount else no Discount
+3. Finally store these details in Googlw sheet
+
+
+Lots of templates available
+- Community templates can be used as per requirement
+
+
+Add trigger  >
+
+google sheet
+
+
+
+
+For gmail
+Google cloud Console> New Project> Libbrary> Api and services> Enable Gmail and Google sheets API, Google drive
+
+From same screen> Below Library> select OAuth consent screen
+
+Branding if hosting app from GCP or Third party domain fill details>left blank as doing it dockerway
+
+GO to GCP>Api and services>credentials> Create Oauth client ID> Name of web app
+ Authorized redirect URIs= copy and paste url from n8n(OAuth Redirect URL)
+          create>> copy client id and secrete id from google to n8n project
+
+
+Few more steps to follow using
+https://console.cloud.google.com/auth/audience
+ADD email ID in test users
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
