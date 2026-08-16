@@ -1,0 +1,32 @@
+Machine Learning Steps:-
+A. Data Collection and Preprocessing:-
+- Gather data from databases, APIs or CSV files.
+- Clean the data by handling missing values, duplicates removing/solving errors.
+- Normalize and standardize numerical values.
+- Convert categorical variables into a machine readable format.
+
+
+B.Feature Engineering
+- features selection for better model performance.
+- if needed Create new features for feature extraction/transformation.
+
+C. Data splitting
+- Divide the dataset into training, validation and testing sets.
+- for imbalanced datasets choose random sampling.
+
+D. Model Selection & Training
+- Choose the best algorithm based on the problem includes classification, regression, Clustering etc.
+- Train the model using the training dataset.
+
+
+E. Model evaluation & Optimization
+Test the model's performance using accuracy, precision, recall and other metrics.
+Tune hyperparameters using Grid Search or Random Search 
+avoide  overfitting using techniques like cross- validation
+
+
+F. Model Deployment
+Deploy the trained model using Flask,TensorFlow
+Save the trained model for real-world applications.
+
+
