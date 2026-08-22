@@ -1,0 +1,89 @@
+What is DeepLearning(DL) ?
+Deep learning is a subset of machine learning that uses multilayered neural networks to enable computers to learn complex patterns and make decisions from large amounts of data.
+
+Inspired from Human Brain Structure.In Human its Neural network, in AI/ML its ANN(Artificial Neural Network.
+
+Compare Biologocal Neuron vs AN
+
+Mathematics Way 
+x1, x2,...xn INputs
+w1, w2, .... wn >> Weights
+y = Output(need to predict)
+g(.) >> activation
+b= bias(when x=0 what is unit value of y)
+
+y=g(w.x+b)
+
+
+How DL Work ?
+Neural network consists of layers of interconnected neurons(nodes) takes part in processing input data.
+These layers are
+A. Input Layer
+B. Hidden Layer(Multiple can be)
+C. Output Layer
+
+
+Every Neuraon from 1st layer is connected to All Nodes(Neurons) to next layer(Fully COnnected/FC)
+
+Now Input data flows through multiple layers where each neuron performs nonlinear transformations, allowing the model to learn intricate representations of the data. Final Layer generates model prediction.
+
+Activation Functions: Activation functions help the network identify nonlinear relationships, allowing it to model real-world scenarios more accurately.
+I. ReLU(Rectified Linear Unit)- keeps +ves and 0'es -Ves f(z)=max(0,z), Default Activation function (hidden layer)
+II. Sigmoid- Squashes any number into 0 n 1 >> for output layer
+III. Softplus-Non linear, range (0 infinity) >> better for optimization
+iii. Tanh :- sqashes any nu between 1 and -1 >> zero-centered output, facilitating easier learning for subsequent layers.
+
+Loss Calculated using
+1. Cross Entropy(classification Loss)- has inbuilt softmax
+2. Softmax always applied to output layer
+
+FORWARD PASS is the Neuron computation repeated for every layer in order.
+Each layer does its weighted sum and activation, hands its output to the next layer, and prediction comes out at very end.
+
+- Only in one direction; Nothing loops back.
+
+
+BACKPROPAGATION passes the error backward through the layers with chain rule, giving each weight its gradient; update weight stepd evry weight a little down.
+- Efficient way to get Gradients
+
+
+ Ability of NN to learn from data and make predictions. 
+Here are some types of neural networks and their practical use cases:
+1.Feedforward Neural Networks (FNN):- Simplest form of ANN
+                    - Data flows only in one direction INput to output good for General tasks.
+               like image classification and speech recognition when data is static and  not sequential
+
+2.Convolutional Neural Networks (CNNs): They are specialized for processing grid-like data, such as images. CNNs use convolutional layers to detect spatial hierarchies, making them ideal for computer vision tasks. Good for Autonomous Driving and Medical Imaging
+
+3.Recurrent Neural Networks (RNNs): Designed for sequential data, such as time series or natural language.
+ RNNs have loops to retain information over time,
+ They are used for tasks like language modeling and speech recognition.
+
+4.Generative Adversarial Networks (GANs): This consist of two networks generator and  discriminator that compete to create realistic data. 
+GANs are widely used for image generation, style transfer and data augmentation
+
+
+MODEL TRAINING
+What is Tensor ?
+a mathematical object that generalizes scalars, vectors, and matrices to higher dimensions, acting as an array of numbers or functions that describe linear or multilinear relationships.
+
+ In frameworks like PyTorch or TensorFlow, a tensor is simply treated as a multi-dimensional data container (an n-dimensional array) used to hold input data, weights, and predictions
+
+The Tensor Dimension Hierarchy
+Tensors are categorized by their "rank" or number of dimensions: 
+Scalar (0-D Tensor): A single number (e.g., a temperature value).
+Vector (1-D Tensor): A list or row of numbers (e.g., a daily step count).
+Matrix (2-D Tensor): A grid of rows and columns (e.g., a black-and-white image).
+3-D Tensor and Higher: Cubes or higher-dimensional blocks of data (e.g., a color image with height, width, and RGB channels, or a video adding time). 
+
+Why Tensors  in AI
+Data Representation: Everything from text and images to sound must be converted into numbers for a model to process; tensors provide a universal container for this data. 
+
+ 
+Hardware Acceleration: Tensors are optimized to run parallel math operations efficiently on modern hardware accelerators like GPUs 
+
+
+Neural Network Flow: Model weights, biases, activations, and gradients are all managed and updated as tensors during training and inference. 
+
+
+
