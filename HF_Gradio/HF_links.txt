@@ -1,0 +1,18 @@
+1. Create HF id
+2. Generate Access token
+https://huggingface.co/settings/tokens
+3. case study of HF
+https://huggingface.co/blog/cfm-case-study
+4. Account types and pricing
+https://huggingface.co/docs/inference-providers/en/pricing
+
+5. HF pipelines Reference 
+https://huggingface.co/docs/transformers/en/main_classes/pipelines
+
+https://github.com/huggingface/transformers/tree/v4.56.2/src/transformers/pipelines
+
+6. Inference Endpoints
+https://huggingface.co/docs/inference-endpoints/en/about
+
+7. Inference Endpoint start using
+https://huggingface.co/docs/inference-endpoints/quick_start
