@@ -1,0 +1,16 @@
+1. Create dir  and get in it
+2. Create .venv 
+3. Install libraries 
+pip install -r requirements.txt
+
+** Add appropriate keys in .env file
+
+4. Execute one after another
+In all dir execute files from Data 1st 
+fetch is optional and take more time 
+Make_corpus must be executed
+Precompute needed for creating embeddings(Consumes lot of token)
+A. with sequence like 
+1_RAG_FromSCratch 
+2_RAG_with_FW
+2_RAG_with_FW
