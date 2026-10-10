@@ -3,3 +3,16 @@
 Hi ALL NO SESSION TODAY
 
 SHared links in reference please go through it; Will helpful for UPCOMING sessions
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+TO EXECUTE FINE TUNE USE GOOGLE COLAB ***DO not execute in LOcal System*****
+To execute  code follow steps as
+1. Open notebook in Google Colab
+   Update/add secret keys as required in notebook
+   Upload dataset.jsonl to files in Colab(check path if its changed update in codeGenerally its /contents/filename)
+   Execute notebook cell by cell ; complete execution of 1 cell then only go for next cell
+2.After 1 only go for Part-II
+  Update eval_set in files (Check for path)
+  Execute cell then Only go for Next cell
+ WILL TAKE MORE RESOURCES AND TIME
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
