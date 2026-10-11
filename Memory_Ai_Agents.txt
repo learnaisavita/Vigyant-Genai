@@ -1,0 +1,58 @@
+AI agent memory is the architectural layer that allows artificial intelligence systems to store, recall, and build upon past experiences.
+
+
+Reference Link [https://mem0.ai/library/agent-memory/memory-in-agents-what-why-and-how]
+
+-By default, Large Language Models (LLMs) are completely stateless
+- AI treats every new interaction or chat session as if it is meeting you for the very first time(without memory support)
+- Memory transforms these reactive tools into continuous, intelligent agents. capable of learning user preferences, maintaining workflows across days or weeks, and avoiding past mistakes
+
+
+Context Window vs. Chat History vs. Memory
+Context Window:-The active text space the model can read right now.
+               - Temporary (resets when the API call or session ends).
+               like A person's immediate attention span
+
+
+Chat History:- A raw, chronological transcript of every single message.
+             - Linear Growth (keeps getting larger).
+              like unedited audio recording of a meeting
+
+AI Agent Memory:-  Structured layer of key facts, preferences, and outcomes.
+                - Persistent & Evolving (survives system restarts and prunes itself over time).
+                - like our own actual cognitive memory (remembering key insights, discarding noise).
+
+
+An advanced AI agent relies on a cognitive architecture broken down into short-term (working) memory and three specific types of long-term memory:
+
+
+1. Short-Term Memory (Working Memory)
+
+-  Holds the temporary details needed to complete an active task or session.
+e.g. If you give a customer service bot your order number, short-term memory allows it to reference that number three sentences later. The moment the chat is closed, this memory is wiped clean
+
+
+2. Semantic Memory (Long-Term Facts)
+- Stores enduring facts, world knowledge, structural concepts, and user preferences independent of the exact moment they were learned.
+e.g.This user works in fintech and prefers concise, Markdown-formatted answers.
+
+
+3. Episodic Memory (Long-Term Experiences)
+- Captures specific past sequences of events—what the agent did, in what order, and whether it succeeded or failed.
+e.g. Remembering that a script migration failed yesterday because of an incompatible library version, prompting the agent to try a different method today
+
+
+4. Procedural Memory (Long-Term Rules & Skills)
+- Houses the operational instructions, "how-to" guidelines, compliance rules, and tools an agent uses to execute tasks.
+e.g.The explicit step-by-step framework an engineering agent follows to perform a rigorous code review
+
+The Memory Data Pipeline:-
+[Raw Interactions] ➔ [1. Extraction] ➔ [2. Storage] ➔ [3. Consolidation] ➔ [4. Retrieval]
+
+Extraction: The agent screens out small talk and isolates high-value facts or outcomes using LLM parsing
+
+Storage: Distilled facts are saved into dedicated vector or relational databases
+
+Consolidation: The system resolves contradictions (e.g., if a user previously liked Python but now explicitly switched to Rust, it overwrites the stale preference)
+
+Retrieval: When a user initiates a new task, the system uses semantic search to surface only the relevant memories needed for the current prompt.
