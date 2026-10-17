@@ -1,0 +1,300 @@
+1. What is MCP?
+
+MCP = Model Context Protocol.
+
+It is an open standard for connecting AI applications to external tools, services, and data. Instead of building a completely different integration for every system, MCP gives applications a common interface.
+-MCP as the open standard for connecting AI models to tools and data
+
+LLM = brain, 
+MCP = standardized connection to tools, 
+tools/APIs = things the brain can interact with.
+
+Without MCP
+
+AI Application
+   ├── custom AWS integration
+   ├── custom GitHub integration
+   ├── custom database integration
+   ├── custom Jira integration
+   └── custom Terraform integration
+
+
+With MCP
+
+AI Application
+      │
+      │ MCP
+      ▼
+ ┌───────────────┐
+ │  MCP Servers  │
+ ├───────────────┤
+ │ AWS           │
+ │ GitHub        │
+ │ Database      │
+ │ Terraform     │
+ │ Documentation │
+ └───────────────┘
+
+MCP uses a client-server architecture. An AI application acts as the MCP host, creates MCP clients, and those clients communicate with MCP servers that expose context or capabilities.
+
+
+Why do we need MCP?
+Normally an LLM by itself can't magically interact with your infrastructure.
+For example, suppose you tell your Terraform Assistant:
+"Create an S3 bucket and check whether my AWS account already has a bucket with this name."
+
+The LLM can generate Terraform code, but checking actual infrastructure requires an external capability.
+That's where MCP becomes useful.
+
+User
+ │
+ ▼
+Terraform AI Assistant
+ │
+ ▼
+Gemini / Groq /OpenAI
+ │
+ │ "I need information from AWS"
+ ▼
+MCP Client
+ │
+ ▼
+AWS-related MCP Server
+ │
+ ▼
+AWS
+
+An MCP server can expose tools, data/resources and other capabilities to an AI application.
+
+So instead of the AI merely telling you what command to run, an MCP-enabled agent can potentially invoke an appropriate exposed tool, subject to the permissions and controls you've configured.
+
+3. Three concepts to remember
+A.MCP Host:- The AI application.
+
+Examples include VS Code and other AI applications that support MCP. Visual Studio Code can act as an MCP host.
+
+B.MCP Client:-The component inside the host responsible for communicating with an MCP server.
+
+C. MCP Server:-The program exposing capabilities/data to the AI.
+
+(Microsoft describes MCP servers as enabling agents to work with external data sources and capabilities.)
+
+          HOST
+┌─────────────────────────┐
+│ Terraform AI Assistant  │
+│                         │
+│ Gemini / Groq           │
+│        │                │
+│    MCP Client           │
+└────────┬────────────────┘
+         │ MCP
+         ▼
+┌─────────────────────────┐
+│      MCP Server         │
+├─────────────────────────┤
+│ tool: terraform_plan()  │
+│ tool: validate()        │
+│ resource: AWS info      │
+└─────────────────────────┘
+
+
+D. MCP vs API
+
+This is an important distinction.
+
+An API exposes functionality from a particular service.
+
+MCP provides a standardized protocol for an AI application to discover and interact with tools/context exposed by MCP servers. MCP's architecture includes discovery and tool-execution exchanges
+
+
+The implementation behind an MCP server can still use normal SDKs/APIs.
+Think of MCP as the AI integration layer, not a replacement for every API.
+
+
+How do you actually use MCP?
+
+There are two common routes:-
+
+Route A: Use an existing MCP server
+
+GitHub MCP Server, which can connect AI tools to GitHub for repository/code access and issue/PR workflows.
+
+>>That's useful when someone has already implemented the capability you require.
+AI Client
+   ↓
+Existing MCP Server
+   ↓
+External system
+
+Route B: Build your own MCP server
+You could expose a very small set of controlled tools
+
+
+MCP connects that AI system to capabilities and context.MCP is NOT the LLM or another model
+
+
+To understand in better way
+┌───────────────────────────────┐
+│ User                          │
+│ "Show sales from Sheet1"      │
+└──────────────┬────────────────┘
+               │
+               ▼
+┌───────────────────────────────┐
+│ Gemini Agent                  │
+│ Decides which tool to call    │
+└──────────────┬────────────────┘
+               │
+               ▼
+┌───────────────────────────────┐
+│ MCP Client                    │
+│ initialize                    │
+│ tools/list                    │
+│ tools/call                    │
+└──────────────┬────────────────┘
+               │ stdio
+               ▼
+┌───────────────────────────────┐
+│ MCP Server                    │
+│ read_sheet                    │
+│ append_row                    │
+└──────────────┬────────────────┘
+               │ Google API
+               ▼
+┌───────────────────────────────┐
+│ Google Sheets                 │
+└───────────────────────────────┘
+The important separation is:
+
+Gemini understands what the user wants.
+MCP client communicates using the MCP contract.
+MCP server exposes approved tools.
+Google Sheets API performs the underlying operation.
+
+MCP is the integration layer. It does not replace Gemini or the Google Sheets API.
+
+The MCP handshake
+
+MCP communication uses a client-server lifecycle. At a practical level, the flow looks like this:
+MCP Client                          MCP Server
+    │                                    │
+    │  Start server process              │
+    │───────────────────────────────────>│
+    │                                    │
+    │  initialize                        │
+    │───────────────────────────────────>│
+    │                                    │
+    │  server capabilities/version       │
+    │<───────────────────────────────────│
+    │                                    │
+    │  initialized notification          │
+    │───────────────────────────────────>│
+    │                                    │
+    │  tools/list                        │
+    │───────────────────────────────────>│
+    │                                    │
+    │  read_sheet, append_row            │
+    │<───────────────────────────────────│
+    │                                    │
+    │  tools/call: read_sheet            │
+    │───────────────────────────────────>│
+    │                                    │
+    │  Google Sheets API request         │
+    │                                    │──────────> Google Sheets
+    │                                    │<────────── rows
+    │                                    │
+    │  tool result                       │
+    │<───────────────────────────────────│
+
+The official MCP architecture describes discovery and tool-execution exchanges, while the SDK handles protocol serialization, schemas, validation, and transport details for us.
+
+
+Conceptual JSON-RPC messages
+
+You normally won't write these messages manually because the SDK generates them, but the communication is conceptually similar to:
+
+A. Client initializes the connection:
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "protocolVersion": "<supported-version>",
+    "capabilities": {},
+    "clientInfo": {
+      "name": "sheets-demo-client",
+      "version": "1.0.0"
+    }
+  }
+}
+
+B. Server responds with its capabilities:
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "protocolVersion": "<negotiated-version>",
+    "capabilities": {
+      "tools": {}
+    },
+    "serverInfo": {
+      "name": "google-sheets-server",
+      "version": "1.0.0"
+    }
+  }
+}
+
+C. Client discovers tools:
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/list",
+  "params": {}
+}
+
+D. Server returns tool definitions:
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "tools": [
+      {
+        "name": "read_sheet",
+        "description": "Read values from a Google Sheet",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "range_name": {
+              "type": "string"
+            }
+          },
+          "required": ["range_name"]
+        }
+      }
+    ]
+  }
+}
+E. Client calls a tool:
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "tools/call",
+  "params": {
+    "name": "read_sheet",
+    "arguments": {
+      "range_name": "Sales!A1:D20"
+    }
+  }
+}
+
+
+mcp-google-sheets-demo/
+│
+├── .env.example
+├── .gitignore
+├── requirements.txt
+├── sheets_server.py
+├── test_client.py
+├── agent.py
+└── credentials/
+    └── service-account.json
